@@ -1,0 +1,36 @@
+version: '3'
+
+services:
+  owncloud:
+    image: owncloud
+    networks:
+    - web
+    volumes:
+    - ./data/apps/:/var/www/html/apps
+    - ./data/config/:/var/www/html/config
+    - ./data/data/:/var/www/html/data
+    labels:
+    - "traefik.enable=true"
+    - "traefik.backend=owncloud"
+    - "traefik.frontend.rule=Host:cloud.${DOMAIN_NAME}"
+    - "traefik.port=80"
+    - "traefik.docker.network=web"
+    depends_on:
+    - postgres
+
+  postgres:
+    image: postgres:alpine
+    environment:
+    - "POSTGRES_PASSWORD=${POSTGRES_PASSWORD}"
+    - POSTGRES_USER=owncloud
+    - POSTGRES_DB=owncloud
+    networks:
+    - web
+    volumes:
+    - /etc/localtime:/etc/localtime:ro
+    - ./data/postgres:/var/lib/postgresql
+
+networks:
+  web:
+    external:
+      name: reverseproxy_default
