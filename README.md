@@ -1,6 +1,8 @@
 Docker-Compose deployment for OwnCloud
 ======================================
 
+![WTFPL](http://www.wtfpl.net/wp-content/uploads/2012/12/wtfpl-badge-4.png)
+
 This simple `docker-compose.yaml` setup aims at getting an OwnCloud/Postgres
 instance up & running in seconds on any box (would it be a server in your
 bedroom, a dedicated server in a datacenter or a VM somewhere in the cloud).
